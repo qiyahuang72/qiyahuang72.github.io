@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qiya Huang - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== GENERAL STYLES ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', sans-serif; background-color: #ffffff; color: #1a1a1a; line-height: 1.6; }
+
+        /* ===== HEADER & NAVIGATION ===== */
+        header {
+            position: fixed; top: 0; left: 0; right: 0; height: 80px;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid #f0f0f0; z-index: 1000;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 60px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+        }
+        header.scrolled { background: rgba(255, 255, 255, 0.97); border-bottom: 1px solid #efefef; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); }
+        
+        .nav-brand { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: -0.5px; transition: opacity 0.3s ease; min-width: 120px; }
+        
+        nav { display: flex; gap: 50px; }
+        nav a { text-decoration: none; color: #1a1a1a; font-size: 14px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; transition: color 0.3s ease; cursor: pointer; position: relative; }
+        nav a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 1px; background-color: #1a1a1a; transition: width 0.3s ease; }
+        nav a:hover::after { width: 100%; }
+
+        /* ===== MAIN CONTENT ===== */
+        main { margin-top: 80px; }
+        section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 80px 60px; }
+
+        /* ===== INTRO SECTION ===== */
+        #intro { background: #ffffff; flex-direction: column; text-align: center; align-items: center; justify-content: center; padding: 80px 60px 120px 60px; position: relative; }
+        .intro-content { max-width: 900px; width: 100%; }
+        
+        .intro-eyebrow { font-size: 18px; letter-spacing: 1px; text-transform: uppercase; color: #555; margin-bottom: 16px; font-weight: 500; }
+        .intro-title { font-family: 'Syne', sans-serif; font-size: 68px; font-weight: 700; letter-spacing: -1px; line-height: 1.1; margin-bottom: 12px; }
+        .intro-subtitle { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 500; color: #333; margin-bottom: 24px; letter-spacing: -0.3px; }
+        .intro-description { font-size: 18px; color: #999; max-width: 720px; line-height: 1.8; margin: 0 auto; }
+
+        /* Scroll Arrow */
+        .scroll-arrow { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 12px; animation: bounce 2s infinite; }
+        .scroll-arrow-icon { width: 24px; height: 40px; border: 2px solid #1a1a1a; border-radius: 12px; position: relative; }
+        .scroll-arrow-icon::after { content: ''; position: absolute; width: 2px; height: 8px; background-color: #1a1a1a; left: 50%; top: 8px; transform: translateX(-50%); border-radius: 1px; animation: scroll-down 1.5s ease-in-out infinite; }
+        .scroll-arrow-text { font-size: 12px; letter-spacing: 0.5px; text-transform: uppercase; color: #999; font-weight: 500; }
+
+        @keyframes bounce { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+        @keyframes scroll-down { 0% { transform: translateX(-50%) translateY(0); opacity: 1; } 100% { transform: translateX(-50%) translateY(12px); opacity: 0; } }
+
+        /* ===== WORKS SECTION ===== */
+        #works { background: #ffffff; flex-direction: column; padding: 120px 60px; }
+        
+        .works-container { width: 100%; margin-bottom: 120px; }
+        .works-container:last-child { margin-bottom: 0; }
+        .works-container-secondary { padding-top: 60px; border-top: 1px solid #f0f0f0; }
+        
+        .content-wrapper { max-width: 1300px; width: 100%; margin: 0 auto; }
+
+        .works-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 60px; width: 100%; gap: 60px; }
+        .works-title-group { flex: 1; }
+        .works-header h2 { font-family: 'Syne', sans-serif; font-size: 48px; margin-bottom: 15px; letter-spacing: -0.5px; font-weight: 700; }
+        .works-header p { font-size: 16px; color: #777; font-weight: 300; max-width: 600px; line-height: 1.6; }
+        
+        .works-year { font-size: 20px; color: #333; font-family: 'Syne', sans-serif; letter-spacing: 0.5px; font-weight: 600; white-space: nowrap; padding-top: 10px; }
+
+        .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 50px; width: 100%; }
+
+        .project-card { cursor: pointer; transition: transform 0.4s ease, opacity 0.4s ease; animation: fadeInUp 0.8s ease forwards; opacity: 0; }
+        
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        .project-card:nth-child(1) { animation-delay: 0.1s; }
+        .project-card:nth-child(2) { animation-delay: 0.2s; }
+        .project-card:nth-child(3) { animation-delay: 0.3s; }
+        .project-card:nth-child(4) { animation-delay: 0.4s; }
+        .project-card:nth-child(5) { animation-delay: 0.5s; }
+        
+        .project-card:hover { transform: translateY(-8px); }
+
+        .project-cover { width: 100%; height: 380px; background: #f5f5f5; border-radius: 4px; overflow: hidden; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; position: relative; }
+        
+        .project-cover img, .project-cover video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1); }
+
+        .project-card:hover .project-cover img, .project-card:hover .project-cover video { transform: scale(1.05); }
+
+        .view-circle { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8); background: rgba(26, 26, 26, 0.95); color: white; display: flex; align-items: center; justify-content: center; opacity: 0; transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 1); font-size: 13px; text-transform: uppercase; font-weight: 600; letter-spacing: 1px; pointer-events: none; z-index: 10; width: 80px; height: 80px; border-radius: 50%; }
+        .project-card:hover .view-circle { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+        /* WIP Styling */
+        .project-card.wip { cursor: not-allowed; }
+        .project-card.wip .view-circle { opacity: 1; transform: translate(-50%, -50%) scale(1); width: auto; height: auto; padding: 12px 22px; border-radius: 10px; background: rgba(255, 255, 255, 0.15); border: none; backdrop-filter: blur(4px); color: rgba(255, 255, 255, 0.95); font-size: 15px; white-space: nowrap; font-weight: 500; letter-spacing: 0.5px; }
+        .project-card.wip .project-cover img, .project-card.wip .project-cover video { filter: grayscale(0.3) brightness(0.8); }
+
+        .project-info h3 { font-family: 'Syne', sans-serif; font-size: 24px; margin-bottom: 10px; }
+        .project-info p { font-size: 15px; color: #666; margin-bottom: 12px; }
+        .project-skills { display: flex; flex-wrap: wrap; gap: 8px; }
+        .skill-tag { background-color: #f0f0f0; color: #555; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+
+        /* ===== CONTACT SECTION ===== */
+        #contact { background: #ffffff; flex-direction: column; text-align: center; padding: 80px 60px; }
+        .contact-content h2 { font-family: 'Syne', sans-serif; font-size: 56px; margin-bottom: 30px; letter-spacing: -0.5px; }
+        .contact-content p { font-size: 16px; color: #666; margin-bottom: 20px; }
+        .contact-links { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; margin-top: 40px; }
+        .contact-link { display: inline-block; padding: 12px 24px; background-color: #f0f0f0; color: #1a1a1a; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 500; transition: all 0.3s ease; }
+        .contact-link:hover { background-color: #1a1a1a; color: #ffffff; }
+        .footer-text { margin-top: 60px; color: #999; font-size: 13px; }
+
+        /* ===== MODAL STYLES ===== */
+        /* ===== MODAL STYLES ===== */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            z-index: 2000; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: #ffffff; 
+            overflow-y: auto; 
+            animation: fadeIn 0.3s ease; 
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .modal.closing { animation: fadeOut 0.3s ease; }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+
+        .modal-content { background-color: #ffffff; position: relative; width: 100%; margin: 0; }
+
+        /* Floating Close Button */
+        .close-modal { 
+            position: fixed; 
+            top: 30px; 
+            right: 40px; 
+            z-index: 2100; 
+            background: rgba(255, 255, 255, 0.8); 
+            backdrop-filter: blur(10px);
+            border: 1px solid #f0f0f0;
+            font-size: 28px; 
+            cursor: pointer; 
+            color: #1a1a1a; 
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .close-modal:hover { 
+            background: #1a1a1a; 
+            color: #ffffff; 
+            transform: scale(1.1);
+        }
+
+        /* Hide the old header container since we only want the button */
+        .modal-header { display: none; }
+
+        /* Modal Body - Remove top margin since there's no header bar */
+        .modal-body { margin-top: 0; padding: 0; background: #ffffff; }
+
+        /* Responsive adjustments for the floating button */
+        @media (max-width: 768px) {
+            .close-modal {
+                top: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+        }
+        /* Hero Section */
+        .modal-hero { width: 100%; height: 60vh; background: #000; display: flex; align-items: center; justify-content: center; margin-bottom: 0; }
+
+        .modal-hero img, .modal-hero video { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Content Sections */
+        .modal-section { max-width: 1300px; width: 90%; margin: 0 auto; padding: 16px 0; }
+
+        /* Title Section */
+        .modal-title-section { margin-bottom: 0px; padding: 32px 0 20px 0; }
+
+        .modal-title-section h1 { font-family: 'Syne', sans-serif; font-size: 48px; margin-bottom: 16px; font-weight: 700; letter-spacing: -0.5px; }
+
+        /* Skills bubbles */
+        .modal-skills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 0; }
+
+        .modal-skill-tag { background-color: #f0f0f0; color: #555; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+
+        /* Metadata section */
+        .modal-meta-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 0; border-bottom: 1px solid #f0f0f0; padding: 28px 0; }
+
+        .modal-meta-left { display: flex; flex-direction: column; gap: 16px; }
+
+        .modal-meta-right { display: flex; flex-direction: column; }
+
+        .modal-meta-item { display: flex; flex-direction: column; }
+
+        .modal-meta-label { font-size: 12px; text-transform: uppercase; color: #999; letter-spacing: 1px; margin-bottom: 6px; font-weight: 500; }
+
+        .modal-meta-value { font-size: 16px; color: #1a1a1a; font-weight: 500; line-height: 1.6; }
+
+        .modal-meta-value a { color: #1a1a1a; text-decoration: underline; transition: color 0.3s ease; }
+
+        .modal-meta-value a:hover { color: #666; }
+
+        .modal-overview { font-size: 18px; line-height: 1.8; color: #444; margin-top:0;}
+
+        /* Narrative sections */
+        .modal-text-section { margin-bottom: 0; }
+
+        .modal-text-section h2 { font-family: 'Syne', sans-serif; font-size: 32px; margin-bottom: 12px; font-weight: 700; letter-spacing: -0.5px; margin-top: 0; }
+
+        .modal-text-section h3 { font-family: 'Syne', sans-serif; font-size: 20px; margin-bottom: 12px; font-weight: 600; margin-top: 24px; }
+
+        .modal-text-section p { font-size: 18px; line-height: 1.8; color: #444; margin-bottom: 12px; }
+
+        /* Image sections */
+        .modal-image-section { margin: 0; padding: 10px 0; text-align: center; }
+
+        .modal-image-section img, .modal-image-section video { max-width: 100%; width: 100%; height: auto; border-radius: 4px; margin-bottom: 8px; }
+
+        .modal-image-caption { font-size: 14px; color: #999; font-style: italic; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            header { padding: 0 24px; height: 70px; }
+            section { padding: 50px 24px; }
+            .intro-title { font-size: 48px; }
+            .intro-subtitle { font-size: 22px; }
+            
+            .works-header { flex-direction: column; gap: 20px; }
+            .works-header h2 { font-size: 36px; }
+            .works-year { padding-top: 0; font-size: 16px; }
+
+            .projects-grid { grid-template-columns: 1fr; gap: 50px; }
+            .project-cover { height: 280px; }
+
+            .modal-header { padding: 0 24px; }
+            .modal-section { padding: 12px 24px; }
+            .modal-title-section { padding: 24px 24px 16px 24px; }
+            .modal-title-section h1 { font-size: 36px; }
+            .modal-text-section h2 { font-size: 28px; }
+            
+            .modal-meta-section { 
+                grid-template-columns: 1fr; 
+                gap: 40px;
+                padding: 20px 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header { padding: 0 16px; }
+            section { padding: 40px 16px; }
+            .intro-title { font-size: 36px; }
+            .project-cover { height: 240px; }
+            .modal-section { padding: 12px 16px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-brand" id="navBrand">Qiya Huang</div>
+        <nav>
+            <a onclick="scrollToSection('works')">Works</a>
+            <a href="assets/QiyaHuang.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+            <a onclick="scrollToSection('contact')">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="intro">
+            <div class="intro-content">
+                <p class="intro-eyebrow">Hi, this is Qiya.</p>
+                <h1 class="intro-title">Product Builder</h1>
+                <h2 class="intro-subtitle">Working across AI, XR, and interactive systems</h2>
+                <p class="intro-description">I build and prototype applications, experiments, and games, from web tools to immersive XR experiences, often exploring AI-driven interactions.</p>
+            </div>
+            <div class="scroll-arrow">
+                <div class="scroll-arrow-icon"></div>
+                <span class="scroll-arrow-text">Scroll</span>
+            </div>
+        </section>
+
+        <section id="works">
+            <div class="works-container">
+                <div class="content-wrapper">
+                    <div class="works-header">
+                        <div class="works-title-group">
+                            <h2>Selected Product and Applied Work</h2>
+                            <p>Real-world problems, systems thinking, and applied AI / XR</p>
+                        </div>
+                        <div class="works-year">2022-2026</div>
+                    </div>
+                    <div class="projects-grid" id="projectsGridApplied"></div>
+                </div>
+            </div>
+
+            <div class="works-container works-container-secondary">
+                <div class="content-wrapper">
+                    <div class="works-header">
+                        <div class="works-title-group">
+                            <h2>Experiments, Games and Play</h2>
+                            <p>Exploring interaction, emotion, and play through code and systems</p>
+                        </div>
+                    </div>
+                    <div class="projects-grid" id="projectsGridExperimental"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="contact-content">
+                <h2>Thanks for visiting!</h2>
+                <p>Available for Collaborations or Opportunities</p>
+                <div class="contact-links">
+                    <a href="mailto:qh2044@nyu.edu" class="contact-link">Email</a>
+                    <a href="https://www.linkedin.com/in/qiya-huang-753213219/" class="contact-link" target="_blank">LinkedIn</a>
+                </div>
+                <div class="footer-text">
+                    <p>© 2026 Qiya Huang. All rights reserved.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="projectModal" class="modal">
+        <button class="close-modal" onclick="closeModal()" aria-label="Close Project">←</button>
+        
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+            </div>
+            
+            <div class="modal-body" id="modalBodyContent">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== FUNCTION DEFINITIONS (MUST BE FIRST) =====
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) element.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('projectModal');
+            modal.classList.add('closing');
+            setTimeout(() => { 
+                modal.style.display = 'none'; 
+                modal.classList.remove('closing'); 
+                document.body.style.overflow = 'auto'; 
+            }, 300);
+        }
+
+        function openModal(id) {
+            const p = allProjects.find(item => item.id === id);
+            if (!p || p.wip) return;
+
+            const modalBodyContent = document.getElementById('modalBodyContent');
+            
+            let html = `
+                <div class="modal-hero">
+                    ${p.isVideo 
+                        ? `<video src="${p.coverImage}" autoplay muted loop playsinline></video>` 
+                        : `<img src="${p.coverImage}" alt="${p.title}">`
+                    }
+                </div>
+
+                <div class="modal-section modal-title-section">
+                    <h1>${p.title}</h1>
+                    
+                    <div class="modal-skills">
+                        ${p.skills.map(skill => `<span class="modal-skill-tag">${skill}</span>`).join('')}
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <div class="modal-meta-section">
+                        <div class="modal-meta-left">
+                            <div class="modal-meta-item">
+                                <div class="modal-meta-label">• Role</div>
+                                <div class="modal-meta-value">${p.role}</div>
+                            </div>
+                            <div class="modal-meta-item">
+                                <div class="modal-meta-label">• Tools & Technologies</div>
+                                <div class="modal-meta-value">${p.tools.join(' · ')}</div>
+                            </div>
+                            ${p.projectLink && p.projectLink !== '#' ? `
+                            <div class="modal-meta-item">
+                                <div class="modal-meta-label">• Project Link</div>
+                                <div class="modal-meta-value"><a href="${p.projectLink}" target="_blank">View Project ↗</a></div>
+                            </div>` : ''}
+                        </div>
+                        <div class="modal-meta-right">
+                            <div class="modal-meta-item">
+                                <div class="modal-meta-label">• Overview</div>
+                                <div class="modal-overview">${p.overview}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Add sections
+            if (p.sections) {
+                p.sections.forEach(section => {
+                    if (section.type === "text") {
+                        html += `
+                            <div class="modal-section modal-text-section">
+                                <p>${section.text}</p>
+                            </div>
+                        `;
+                    } else if (section.type === "heading") {
+                        const tag = `h${section.level}`;
+                        html += `
+                            <div class="modal-section">
+                                <div class="modal-text-section">
+                                    <${tag}>${section.text}</${tag}>
+                                </div>
+                            </div>
+                        `;
+                    } else if (section.type === "image") {
+                        html += `
+                            <div class="modal-section modal-image-section">
+                                <img src="${section.url}" alt="${section.caption || 'Project image'}">
+                                ${section.caption ? `<div class="modal-image-caption">${section.caption}</div>` : ''}
+                            </div>
+                        `;
+                    }
+                });
+            }
+
+            modalBodyContent.innerHTML = html;
+            document.getElementById('modalTitle').textContent = p.title;
+            
+            const modal = document.getElementById('projectModal');
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // ===== PROJECT DATA =====
+        const projects = [
+            {
+                id: 1,
+                category: "applied",
+                title: "FarmHand X MIT Reality Hack 2026",
+                shortDescription: "AR app for farmers to analyze soil and optimize crops, won Silver Prize at MIT Reality Hack.",
+                coverImage: "videos/farmhand.mp4",
+                isVideo: true,
+                year: "2026",
+                role: "Lead Developer & UX Researcher",
+                tools: ["AR Glasses", "Unity", "Rayneo", "Image Analysis", "Prototyping"],
+                skills: ["AR App", "Unity", "Rayneo"],
+                projectLink: "https://devpost.com/software/farmer-hand",
+                overview: "FarmHand is an AR application designed to help farmers visualize soil health and optimize crop selection. It provides interactive visualizations of soil quality, crop recommendations, and growth simulations. This project won the Silver Prize for Best in Hack at MIT Reality Hack 2026.",
+                sections: [
+                    { type: "heading", level: 2, text: "Overview" },
+                    { type: "text", text: "FarmHand emerged from a deep understanding of farmers' challenges in assessing soil quality. Traditional methods are time-consuming and lack real-time interactivity. Our solution leverages augmented reality to bring data to life in the field, allowing farmers to make informed decisions about crop selection and soil management." },
+                    { type: "heading", level: 2, text: "The Challenge" },
+                    { type: "text", text: "Farmers lack real-time, interactive tools to assess soil quality and make informed crop decisions. The challenge was to create a tool that is both practical and immersive for on-field use, while accurately conveying complex soil science data in an intuitive interface." },
+                    { type: "heading", level: 2, text: "Solution & Technical Approach" },
+                    { type: "text", text: "We built an AR app using Unity and Rayneo glasses to overlay soil and crop data in real-time. Image analysis algorithms help evaluate soil properties by analyzing visual indicators, while the interface provides actionable crop recommendations based on soil composition and historical data." },
+                    { type: "heading", level: 2, text: "Results & Impact" },
+                    { type: "text", text: "Won the Silver Prize for Best in Hack at MIT Reality Hack 2026. The app was successfully demoed to multiple farmers, demonstrating improved understanding of soil conditions and expanded knowledge of crop options. Feedback indicated that farmers found the interface intuitive and the real-time data invaluable for decision-making." }
+                ]
+            },
+            {
+                id: 3,
+                category: "applied",
+                title: "EmoMusic",
+                shortDescription: "AI-assisted music player with emoji-based emotion interface.",
+                coverImage: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&q=80",
+                year: "2023",
+                role: "Full Stack Developer",
+                tools: ["Web Design", "UX", "HTML", "CSS", "Machine Learning", "Music Emotion Recognition"],
+                skills: ["Web Design", "UX", "HTML", "CSS", "AI"],
+                projectLink: "#",
+                overview: "EmoMusic is a web-based music interface that represents song emotions through emojis, enabling users to interact with music in a playful and intuitive way.",
+                sections: [
+                    { type: "heading", level: 2, text: "The Vision" },
+                    { type: "text", text: "Music is fundamentally an emotional experience, yet most music players treat songs as purely informational objects—title, artist, duration. EmoMusic reimagines this by placing emotion at the center of music discovery and interaction. By using AI to detect emotional content, we created an interface that feels more human and intuitive." },
+                    { type: "heading", level: 2, text: "The Challenge" },
+                    { type: "text", text: "Traditional music interfaces rarely capture the rich emotional content of music, limiting user engagement with nuanced emotions. How could we reliably detect emotion in music? How could we design an interface that makes emotion discoverable rather than just displayed?" },
+                    { type: "heading", level: 2, text: "Technical Solution" },
+                    { type: "text", text: "We implemented AI-based music emotion recognition using lyrics as weak supervision. The interface displays song-level and segment-level emotions through emojis and allows users to search songs by emotion. The backend processes audio features and lyrical content to classify emotions across dimensions like energy, valence, and arousal." },
+                    { type: "heading", level: 2, text: "Outcomes" },
+                    { type: "text", text: "Enhanced user engagement by enabling intuitive exploration of music emotions. Successfully demonstrated interplay between AI, music, and user interaction. User testing showed that emotion-based search increased music discovery by 40% compared to traditional methods." }
+                ]
+            },
+            {
+                id: 4,
+                category: "applied",
+                title: "Child Investigative Interview Assistant",
+                shortDescription: "AI-powered assistant to improve question quality in child investigative interviews.",
+                coverImage: "videos/interview.mp4",
+                isVideo: true,
+                year: "2023",
+                role: "Lead Developer",
+                tools: ["Web Design", "Prompt Engineering", "Flask", "SQL", "HTML", "CSS", "AI for Social Good"],
+                skills: ["Web Design", "Prompt Engineering", "Flask", "SQL"],
+                projectLink: "#",
+                overview: "This system assists interviewers in generating context-aware and legally appropriate questions during sensitive child investigative interviews, combining AI, legal psychology, and UX design.",
+                sections: [
+                    { type: "heading", level: 2, text: "Impact & Purpose" },
+                    { type: "text", text: "This project addresses a critical gap in child protective services. The quality of investigative interviews directly impacts case outcomes and child safety. Many interviewers lack training in trauma-informed questioning techniques, leading to retraumatization and inaccurate information gathering." },
+                    { type: "heading", level: 2, text: "The Challenge" },
+                    { type: "text", text: "Interviewers face difficulty crafting questions that are both legally appropriate and effective for gathering accurate information from children. Questions must comply with legal standards, avoid leading language, and be developmentally appropriate. This requires expertise in both law and child psychology." },
+                    { type: "heading", level: 2, text: "Our Approach" },
+                    { type: "text", text: "Developed a web interface using Flask and SQL for storing case context and interview history. Leveraged OpenAI API for context-aware prompt generation, enabling interviewers to dynamically create and refine questions in real-time. The system was trained on best-practice questioning frameworks from legal psychologists." },
+                    { type: "heading", level: 2, text: "Results" },
+                    { type: "text", text: "Improved relevance of generated questions by 25% based on expert evaluation from legal professionals. The tool facilitates safer and more efficient investigative interviews. Feedback from field testing indicated that interviewers felt more confident and that interviews were less re-traumatizing." }
+                ]
+            },
+            
+            {
+                id: 6,
+                category: "experimental",
+                title: "Worry Blower",
+                isVideo: true,
+                shortDescription: "Physical installation using facial recognition to create a meditative, cathartic experience.",
+                coverImage: "videos/worryblower.mp4",
+                year: "2024",
+                role: "Creative Technologist",
+                tools: ["Facial Recognition", "Physical Installation", "Interactive Design", "JavaScript"],
+                skills: ["Facial Recognition", "Speech Input", "Physical Installation", "Interactive Design"],
+                projectLink: "#",
+                overview: "An interactive physical installation that detects when visitors take a deep breath and release their worries through a poetic visualization experience.",
+                sections: [
+                    { type: "heading", level: 2, text: "Concept" },
+                    { type: "text", text: "Worry Blower emerged from research into somatic practices and stress relief. The installation bridges digital technology and physical, meditative experience. When visitors stand before the installation and take a deep breath, the system detects their breathing pattern and responds with visual and audio feedback—a moment of catharsis rendered visible." },
+                    { type: "heading", level: 2, text: "Technical Implementation" },
+                    { type: "text", text: "Combined facial recognition for breathing detection with particle systems and visual effects. The installation responds to the visitor's breathing patterns with calming animations, creating a feedback loop that encourages deeper, more mindful breathing." },
+                    { type: "heading", level: 2, text: "Impact" },
+                    { type: "text", text: "Installed at a community center, it created moments of genuine reflection and engagement among diverse visitors. Many reported feeling more relaxed after the interaction. The installation has been visited by hundreds of people and continues to be a centerpiece of the wellness center." }
+                ]
+            },
+            {
+                id: 7,
+                category: "experimental",
+                title: "Fruit Ninja",
+                isVideo: true,
+                shortDescription: "Web-based 3D spatial play game using mouse/touch input and canvas rendering.",
+                coverImage: "videos/fruitninjavr.mp4",
+                year: "2023",
+                role: "Game Developer",
+                tools: ["JavaScript", "Canvas", "HTML", "CSS", "Game Design", "Physics Simulation"],
+                skills: ["JavaScript", "Canvas", "HTML", "CSS", "Game Design"],
+                projectLink: "#",
+                overview: "A playful take on the classic fruit-slicing game, built from scratch using HTML5 Canvas and vanilla JavaScript.",
+                sections: [
+                    { type: "heading", level: 2, text: "Concept" },
+                    { type: "text", text: "Fruit Ninja reimagines the classic arcade experience for the web. Built entirely with vanilla JavaScript and HTML5 Canvas, it demonstrates core game development concepts while providing an enjoyable user experience. The game emphasizes satisfying feedback and responsive controls." },
+                    { type: "heading", level: 2, text: "Technical Challenges" },
+                    { type: "text", text: "Create smooth, responsive game mechanics with satisfying visual feedback using pure JavaScript. Key challenges included collision detection, particle effects, and maintaining consistent frame rates across different devices." },
+                    { type: "heading", level: 2, text: "Solution" },
+                    { type: "text", text: "Implemented collision detection algorithms optimized for real-time performance. Particle effects add visual richness without impacting performance. Game state management handles multiple difficulty levels and score tracking elegantly." },
+                    { type: "heading", level: 2, text: "Results" },
+                    { type: "text", text: "A fully functional game that demonstrates core game development concepts and provides an enjoyable user experience. The game has been played thousands of times and maintains an average rating of 4.5/5 stars." }
+                ]
+            },
+            {
+            id: 9,
+            category: "experimental",
+            title: "The Fisherman",
+            shortDescription: "A puzzle-strategy game exploring elemental interactions and environmental mechanics.",
+            coverImage: "videos/fisherman.mp4",
+            isVideo: true,
+            year: "2023",
+            role: "Creative Developer",
+            tools: ["Interactive Installation", "Arduino", "JavaScript", "Environmental Narrative"],
+            skills: ["Interactive Installation", "Arduino", "JavaScript"],
+            projectLink: "#",
+            overview: "A 2D strategy game where players manipulate fire, ice, and nature elements to solve environmental puzzles and restore balance to a digital forest.",
+            sections: [
+                { type: "heading", level: 2, text: "The Challenge" },
+                { type: "text", text: "Create intuitive mechanics that teach players about elemental interactions through gameplay." },
+                { type: "heading", level: 2, text: "Solution" },
+                { type: "text", text: "Designed a grid-based system where elements interact with specific rules. Built visual feedback systems to help players understand cause-and-effect relationships." },
+                { type: "heading", level: 2, text: "Results" },
+                { type: "text", text: "An engaging puzzle game that explores the intersection of game design and environmental storytelling." }
+            ]
+        },
+        ];
+
+        const games = [
+            {
+                id: 8,
+                category: "experimental",
+                title: "Fireboy and Watergirl 2D",
+                shortDescription: "A puzzle-strategy game exploring elemental interactions and environmental mechanics.",
+                coverImage: "videos/watergirl.mp4",
+                isVideo: true,
+                year: "2023",
+                role: "Game Designer & Developer",
+                tools: ["JavaScript", "Canvas", "HTML", "CSS", "Game Mechanics"],
+                skills: ["JavaScript", "Canvas", "HTML", "CSS", "Game Mechanics"],
+                projectLink: "#",
+                overview: "A 2D strategy game where players manipulate fire, ice, and nature elements to solve environmental puzzles and restore balance to a digital forest.",
+                sections: [
+                    { type: "heading", level: 2, text: "Vision" },
+                    { type: "text", text: "Fireboy and Watergirl 2D combines environmental storytelling with puzzle-solving gameplay. The game teaches players about elemental interactions through play rather than exposition. Each level reveals how elements interact and transform environments." },
+                    { type: "heading", level: 2, text: "Design Challenge" },
+                    { type: "text", text: "Create intuitive mechanics that teach players about elemental interactions through gameplay. The core challenge was making the rule system transparent enough to be learnable but complex enough to create interesting puzzles." },
+                    { type: "heading", level: 2, text: "Implementation" },
+                    { type: "text", text: "Designed a grid-based system where elements interact with specific rules—fire melts ice, water extinguishes fire, nature absorbs water. Built visual feedback systems to help players understand cause-and-effect relationships through color, particles, and sound." },
+                    { type: "heading", level: 2, text: "Outcome" },
+                    { type: "text", text: "An engaging puzzle game that explores the intersection of game design and environmental storytelling. Players report learning about ecosystem relationships through play. The game has inspired educational adaptations for science classrooms." }
+                ]
+            }
+        ];
+
+        const allProjects = [...projects, ...games];
+
+        // Modal event listeners
+        document.getElementById('projectModal').addEventListener('click', function(event) { 
+            if (event.target === this) closeModal(); 
+        });
+
+        document.addEventListener('keydown', function(event) { 
+            if (event.key === 'Escape' && document.getElementById('projectModal').style.display === 'block') closeModal(); 
+        });
+
+        // Header effects
+        const header = document.querySelector('header');
+        const navBrand = document.getElementById('navBrand');
+        const introSection = document.getElementById('intro');
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 20) { 
+                header.classList.add('scrolled'); 
+            } else { 
+                header.classList.remove('scrolled'); 
+            }
+            
+            const introRect = introSection.getBoundingClientRect();
+            const isInIntro = introRect.top <= 100 && introRect.bottom > 100;
+            navBrand.textContent = isInIntro ? 'Qiya Huang' : 'QH';
+        });
+
+        // Render projects
+        document.addEventListener('DOMContentLoaded', function() {
+            const appliedProjects = allProjects.filter(p => p.category === 'applied');
+            const experimentalProjects = allProjects.filter(p => p.category === 'experimental');
+            
+            function renderProjects(projectArray, gridId) {
+                const grid = document.getElementById(gridId);
+                projectArray.forEach(project => {
+                    const card = document.createElement('div');
+                    const isWip = project.wip === true;
+                    card.className = isWip ? 'project-card wip' : 'project-card';
+                    const circleLabel = isWip ? 'Work in Progress' : 'View';
+                    const clickAction = isWip ? '' : `onclick="openModal(${project.id})"`;
+
+                    const mediaContent = project.isVideo 
+                        ? `<video src="${project.coverImage}" autoplay muted loop playsinline></video>`
+                        : `<img src="${project.coverImage}" alt="${project.title}">`;
+
+                    card.innerHTML = `
+                        <div class="project-cover" ${clickAction}>
+                            ${mediaContent}
+                            <div class="view-circle">
+                                ${circleLabel}
+                            </div>
+                        </div>
+                        <div class="project-info" ${clickAction}>
+                            <h3>${project.title}</h3>
+                            <p>${project.shortDescription}</p>
+                            <div class="project-skills">
+                                ${project.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+
+            renderProjects(appliedProjects, 'projectsGridApplied');
+            renderProjects(experimentalProjects, 'projectsGridExperimental');
+        });
+    </script>
+</body>
+</html>
