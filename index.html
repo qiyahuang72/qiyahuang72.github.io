@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         /* ===== GENERAL STYLES ===== */
+        :root { --header-height: 80px; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { font-family: 'DM Sans', sans-serif; background-color: #ffffff; color: #1a1a1a; line-height: 1.6; }
@@ -30,16 +31,16 @@
         nav a:hover::after { width: 100%; }
 
         /* ===== MAIN CONTENT ===== */
-        main { margin-top: 80px; }
+        main { margin-top: var(--header-height); }
         section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 80px 60px; }
 
         /* ===== INTRO SECTION ===== */
-        #intro { background: #ffffff; flex-direction: column; text-align: center; align-items: center; justify-content: center; padding: 80px 60px 120px 60px; position: relative; }
+        #intro { background: #ffffff; flex-direction: column; text-align: center; align-items: center; justify-content: center; min-height: calc(100dvh - var(--header-height)); padding: clamp(40px, 8vh, 80px) 60px; position: relative; }
         .intro-content { max-width: 900px; width: 100%; }
         
         .intro-eyebrow { font-size: 18px; letter-spacing: 1px; text-transform: uppercase; color: #555; margin-bottom: 16px; font-weight: 500; }
-        .intro-title { font-family: 'Syne', sans-serif; font-size: 68px; font-weight: 700; letter-spacing: -1px; line-height: 1.1; margin-bottom: 12px; }
-        .intro-subtitle { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 500; color: #333; margin-bottom: 24px; letter-spacing: -0.3px; }
+        .intro-title { font-size: 64px; font-weight: 800; color: #1a1a1a; line-height: 1.2; }
+        .intro-subtitle { font-size: 24px; font-weight: 600; color: #333; margin-bottom: 32px; }
         .intro-description { font-size: 18px; color: #999; max-width: 720px; line-height: 1.8; margin: 0 auto; }
 
         /* Scroll Arrow */
@@ -67,7 +68,7 @@
         
         .works-year { font-size: 20px; color: #333; font-family: 'Syne', sans-serif; letter-spacing: 0.5px; font-weight: 600; white-space: nowrap; padding-top: 10px; }
 
-        .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 50px; width: 100%; }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px; width: 100%; }
 
         .project-card { cursor: pointer; transition: transform 0.4s ease, opacity 0.4s ease; animation: fadeInUp 0.8s ease forwards; opacity: 0; }
         
@@ -81,14 +82,16 @@
         
         .project-card:hover { transform: translateY(-8px); }
 
-        .project-cover { width: 100%; height: 380px; background: #f5f5f5; border-radius: 4px; overflow: hidden; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .project-cover { width: 100%; height: 300px; background: #f5f5f5; border-radius: 4px; overflow: hidden; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; position: relative; }
         
         .project-cover img, .project-cover video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1); }
+        .project-cover video { aspect-ratio: 4 / 3; width: 100%; height: auto; }
 
         .project-card:hover .project-cover img, .project-card:hover .project-cover video { transform: scale(1.05); }
 
         .view-circle { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8); background: rgba(26, 26, 26, 0.95); color: white; display: flex; align-items: center; justify-content: center; opacity: 0; transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 1); font-size: 13px; text-transform: uppercase; font-weight: 600; letter-spacing: 1px; pointer-events: none; z-index: 10; width: 80px; height: 80px; border-radius: 50%; }
         .project-card:hover .view-circle { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        .project-card.password-protected .view-circle { width: auto; height: auto; min-height: 56px; padding: 0 20px; border-radius: 999px; white-space: nowrap; }
 
         /* WIP Styling */
         .project-card.wip { cursor: not-allowed; }
@@ -110,7 +113,6 @@
         .footer-text { margin-top: 60px; color: #999; font-size: 13px; }
 
         /* ===== MODAL STYLES ===== */
-        /* ===== MODAL STYLES ===== */
         .modal { 
             display: none; 
             position: fixed; 
@@ -130,53 +132,71 @@
 
         .modal-content { background-color: #ffffff; position: relative; width: 100%; margin: 0; }
 
-        /* Floating Close Button */
-        .close-modal { 
-            position: fixed; 
-            top: 30px; 
-            right: 40px; 
-            z-index: 2100; 
-            background: rgba(255, 255, 255, 0.8); 
-            backdrop-filter: blur(10px);
-            border: 1px solid #f0f0f0;
-            font-size: 28px; 
-            cursor: pointer; 
-            color: #1a1a1a; 
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+        /* ===== BACK BUTTON (top-left) ===== */
+        .close-modal {
+            position: fixed;
+            top: 28px;
+            left: 40px;
+            z-index: 2100;
+            background: #ffffff;
+            border: 1.5px solid #e8e8e8;
+            cursor: pointer;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px 10px 14px;
+            border-radius: 100px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            transition: all 0.25s cubic-bezier(0.2, 1, 0.3, 1);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+        }
+
+        .close-modal:hover {
+            background: #1a1a1a;
+            color: #ffffff;
+            border-color: #1a1a1a;
+            transform: translateX(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Arrow icon inside the button */
+        .close-modal .btn-arrow {
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            transition: background 0.25s ease;
+            flex-shrink: 0;
         }
 
-        .close-modal:hover { 
-            background: #1a1a1a; 
-            color: #ffffff; 
-            transform: scale(1.1);
+        .close-modal:hover .btn-arrow {
+            background: rgba(255, 255, 255, 0.15);
         }
 
-        /* Hide the old header container since we only want the button */
+        .close-modal .btn-arrow svg {
+            width: 14px;
+            height: 14px;
+            transition: transform 0.25s ease;
+        }
+
+        .close-modal:hover .btn-arrow svg {
+            transform: translateX(-2px);
+        }
+
+        /* Hide the old header container */
         .modal-header { display: none; }
-
-        /* Modal Body - Remove top margin since there's no header bar */
         .modal-body { margin-top: 0; padding: 0; background: #ffffff; }
 
-        /* Responsive adjustments for the floating button */
-        @media (max-width: 768px) {
-            .close-modal {
-                top: 20px;
-                right: 20px;
-                width: 40px;
-                height: 40px;
-                font-size: 20px;
-            }
-        }
         /* Hero Section */
         .modal-hero { width: 100%; height: 60vh; background: #000; display: flex; align-items: center; justify-content: center; margin-bottom: 0; }
-
         .modal-hero img, .modal-hero video { width: 100%; height: 100%; object-fit: cover; }
 
         /* Content Sections */
@@ -184,74 +204,53 @@
 
         /* Title Section */
         .modal-title-section { margin-bottom: 0px; padding: 32px 0 20px 0; }
-
         .modal-title-section h1 { font-family: 'Syne', sans-serif; font-size: 48px; margin-bottom: 16px; font-weight: 700; letter-spacing: -0.5px; }
 
         /* Skills bubbles */
         .modal-skills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 0; }
-
         .modal-skill-tag { background-color: #f0f0f0; color: #555; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; }
 
         /* Metadata section */
         .modal-meta-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 0; border-bottom: 1px solid #f0f0f0; padding: 28px 0; }
-
         .modal-meta-left { display: flex; flex-direction: column; gap: 16px; }
-
         .modal-meta-right { display: flex; flex-direction: column; }
-
         .modal-meta-item { display: flex; flex-direction: column; }
-
         .modal-meta-label { font-size: 12px; text-transform: uppercase; color: #999; letter-spacing: 1px; margin-bottom: 6px; font-weight: 500; }
-
         .modal-meta-value { font-size: 16px; color: #1a1a1a; font-weight: 500; line-height: 1.6; }
-
         .modal-meta-value a { color: #1a1a1a; text-decoration: underline; transition: color 0.3s ease; }
-
         .modal-meta-value a:hover { color: #666; }
-
         .modal-overview { font-size: 18px; line-height: 1.8; color: #444; margin-top:0;}
 
         /* Narrative sections */
         .modal-text-section { margin-bottom: 0; }
-
         .modal-text-section h2 { font-family: 'Syne', sans-serif; font-size: 32px; margin-bottom: 12px; font-weight: 700; letter-spacing: -0.5px; margin-top: 0; }
-
         .modal-text-section h3 { font-family: 'Syne', sans-serif; font-size: 20px; margin-bottom: 12px; font-weight: 600; margin-top: 24px; }
-
         .modal-text-section p { font-size: 18px; line-height: 1.8; color: #444; margin-bottom: 12px; }
 
         /* Image sections */
         .modal-image-section { margin: 0; padding: 10px 0; text-align: center; }
-
         .modal-image-section img, .modal-image-section video { max-width: 100%; width: 100%; height: auto; border-radius: 4px; margin-bottom: 8px; }
-
         .modal-image-caption { font-size: 14px; color: #999; font-style: italic; }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
+            :root { --header-height: 70px; }
             header { padding: 0 24px; height: 70px; }
             section { padding: 50px 24px; }
             .intro-title { font-size: 48px; }
             .intro-subtitle { font-size: 22px; }
-            
             .works-header { flex-direction: column; gap: 20px; }
             .works-header h2 { font-size: 36px; }
             .works-year { padding-top: 0; font-size: 16px; }
-
             .projects-grid { grid-template-columns: 1fr; gap: 50px; }
             .project-cover { height: 280px; }
-
-            .modal-header { padding: 0 24px; }
             .modal-section { padding: 12px 24px; }
             .modal-title-section { padding: 24px 24px 16px 24px; }
             .modal-title-section h1 { font-size: 36px; }
             .modal-text-section h2 { font-size: 28px; }
-            
-            .modal-meta-section { 
-                grid-template-columns: 1fr; 
-                gap: 40px;
-                padding: 20px 24px;
-            }
+            .modal-meta-section { grid-template-columns: 1fr; gap: 40px; padding: 20px 24px; }
+            .close-modal { top: 20px; left: 20px; padding: 8px 16px 8px 10px; font-size: 12px; }
+            .close-modal .btn-arrow { width: 22px; height: 22px; }
         }
 
         @media (max-width: 480px) {
@@ -292,7 +291,7 @@
                 <div class="content-wrapper">
                     <div class="works-header">
                         <div class="works-title-group">
-                            <h2>Selected Product and Applied Work</h2>
+                            <h2>Selected Applied Work</h2>
                             <p>Real-world problems, systems thinking, and applied AI / XR</p>
                         </div>
                         <div class="works-year">2022-2026</div>
@@ -330,20 +329,25 @@
     </main>
 
     <div id="projectModal" class="modal">
-        <button class="close-modal" onclick="closeModal()" aria-label="Close Project">←</button>
+        <button class="close-modal" onclick="closeModal()" aria-label="Back to Works">
+            <span class="btn-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5M12 5l-7 7 7 7"/>
+                </svg>
+            </span>
+            Back
+        </button>
         
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="modalTitle"></h2>
             </div>
             
-            <div class="modal-body" id="modalBodyContent">
-                </div>
+            <div class="modal-body" id="modalBodyContent"></div>
         </div>
     </div>
 
     <script>
-        // ===== FUNCTION DEFINITIONS (MUST BE FIRST) =====
         function scrollToSection(id) {
             const element = document.getElementById(id);
             if (element) element.scrollIntoView({ behavior: 'smooth' });
@@ -363,8 +367,15 @@
             const p = allProjects.find(item => item.id === id);
             if (!p || p.wip) return;
 
+            if (p.title === "Mother ANNA") {
+                const password = prompt("Enter the password to access this project:");
+                if (password !== "motheranna") {
+                    alert("Incorrect password. Access denied.");
+                    return;
+                }
+            }
+
             const modalBodyContent = document.getElementById('modalBodyContent');
-            
             let html = `
                 <div class="modal-hero">
                     ${p.isVideo 
@@ -375,7 +386,6 @@
 
                 <div class="modal-section modal-title-section">
                     <h1>${p.title}</h1>
-                    
                     <div class="modal-skills">
                         ${p.skills.map(skill => `<span class="modal-skill-tag">${skill}</span>`).join('')}
                     </div>
@@ -408,38 +418,9 @@
                 </div>
             `;
 
-            // Add sections
-            if (p.sections) {
-                p.sections.forEach(section => {
-                    if (section.type === "text") {
-                        html += `
-                            <div class="modal-section modal-text-section">
-                                <p>${section.text}</p>
-                            </div>
-                        `;
-                    } else if (section.type === "heading") {
-                        const tag = `h${section.level}`;
-                        html += `
-                            <div class="modal-section">
-                                <div class="modal-text-section">
-                                    <${tag}>${section.text}</${tag}>
-                                </div>
-                            </div>
-                        `;
-                    } else if (section.type === "image") {
-                        html += `
-                            <div class="modal-section modal-image-section">
-                                <img src="${section.url}" alt="${section.caption || 'Project image'}">
-                                ${section.caption ? `<div class="modal-image-caption">${section.caption}</div>` : ''}
-                            </div>
-                        `;
-                    }
-                });
-            }
-
             modalBodyContent.innerHTML = html;
             document.getElementById('modalTitle').textContent = p.title;
-            
+
             const modal = document.getElementById('projectModal');
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden';
@@ -460,16 +441,23 @@
                 skills: ["AR App", "Unity", "Rayneo"],
                 projectLink: "https://devpost.com/software/farmer-hand",
                 overview: "FarmHand is an AR application designed to help farmers visualize soil health and optimize crop selection. It provides interactive visualizations of soil quality, crop recommendations, and growth simulations. This project won the Silver Prize for Best in Hack at MIT Reality Hack 2026.",
-                sections: [
-                    { type: "heading", level: 2, text: "Overview" },
-                    { type: "text", text: "FarmHand emerged from a deep understanding of farmers' challenges in assessing soil quality. Traditional methods are time-consuming and lack real-time interactivity. Our solution leverages augmented reality to bring data to life in the field, allowing farmers to make informed decisions about crop selection and soil management." },
-                    { type: "heading", level: 2, text: "The Challenge" },
-                    { type: "text", text: "Farmers lack real-time, interactive tools to assess soil quality and make informed crop decisions. The challenge was to create a tool that is both practical and immersive for on-field use, while accurately conveying complex soil science data in an intuitive interface." },
-                    { type: "heading", level: 2, text: "Solution & Technical Approach" },
-                    { type: "text", text: "We built an AR app using Unity and Rayneo glasses to overlay soil and crop data in real-time. Image analysis algorithms help evaluate soil properties by analyzing visual indicators, while the interface provides actionable crop recommendations based on soil composition and historical data." },
-                    { type: "heading", level: 2, text: "Results & Impact" },
-                    { type: "text", text: "Won the Silver Prize for Best in Hack at MIT Reality Hack 2026. The app was successfully demoed to multiple farmers, demonstrating improved understanding of soil conditions and expanded knowledge of crop options. Feedback indicated that farmers found the interface intuitive and the real-time data invaluable for decision-making." }
-                ]
+                sections: []
+            },
+            {
+                id: 2,
+                category: "applied",
+                title: "Mother ANNA",
+                passwordProtected: true,
+                shortDescription: "Conversational AI Mobile App.",
+                coverImage: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&q=80",
+                //isVideo: true,
+                year: "2023",
+                role: "Lead Developer",
+                tools: ["Web Design", "Prompt Engineering", "Flask", "SQL", "HTML", "CSS", "AI for Social Good"],
+                skills: ["Web Design", "Prompt Engineering", "Flask", "SQL"],
+                projectLink: "#",
+                overview: "This system assists interviewers in generating context-aware and legally appropriate questions during sensitive child investigative interviews, combining AI, legal psychology, and UX design.",
+                sections: []
             },
             {
                 id: 3,
@@ -483,16 +471,7 @@
                 skills: ["Web Design", "UX", "HTML", "CSS", "AI"],
                 projectLink: "#",
                 overview: "EmoMusic is a web-based music interface that represents song emotions through emojis, enabling users to interact with music in a playful and intuitive way.",
-                sections: [
-                    { type: "heading", level: 2, text: "The Vision" },
-                    { type: "text", text: "Music is fundamentally an emotional experience, yet most music players treat songs as purely informational objects—title, artist, duration. EmoMusic reimagines this by placing emotion at the center of music discovery and interaction. By using AI to detect emotional content, we created an interface that feels more human and intuitive." },
-                    { type: "heading", level: 2, text: "The Challenge" },
-                    { type: "text", text: "Traditional music interfaces rarely capture the rich emotional content of music, limiting user engagement with nuanced emotions. How could we reliably detect emotion in music? How could we design an interface that makes emotion discoverable rather than just displayed?" },
-                    { type: "heading", level: 2, text: "Technical Solution" },
-                    { type: "text", text: "We implemented AI-based music emotion recognition using lyrics as weak supervision. The interface displays song-level and segment-level emotions through emojis and allows users to search songs by emotion. The backend processes audio features and lyrical content to classify emotions across dimensions like energy, valence, and arousal." },
-                    { type: "heading", level: 2, text: "Outcomes" },
-                    { type: "text", text: "Enhanced user engagement by enabling intuitive exploration of music emotions. Successfully demonstrated interplay between AI, music, and user interaction. User testing showed that emotion-based search increased music discovery by 40% compared to traditional methods." }
-                ]
+                sections: []
             },
             {
                 id: 4,
@@ -507,18 +486,23 @@
                 skills: ["Web Design", "Prompt Engineering", "Flask", "SQL"],
                 projectLink: "#",
                 overview: "This system assists interviewers in generating context-aware and legally appropriate questions during sensitive child investigative interviews, combining AI, legal psychology, and UX design.",
-                sections: [
-                    { type: "heading", level: 2, text: "Impact & Purpose" },
-                    { type: "text", text: "This project addresses a critical gap in child protective services. The quality of investigative interviews directly impacts case outcomes and child safety. Many interviewers lack training in trauma-informed questioning techniques, leading to retraumatization and inaccurate information gathering." },
-                    { type: "heading", level: 2, text: "The Challenge" },
-                    { type: "text", text: "Interviewers face difficulty crafting questions that are both legally appropriate and effective for gathering accurate information from children. Questions must comply with legal standards, avoid leading language, and be developmentally appropriate. This requires expertise in both law and child psychology." },
-                    { type: "heading", level: 2, text: "Our Approach" },
-                    { type: "text", text: "Developed a web interface using Flask and SQL for storing case context and interview history. Leveraged OpenAI API for context-aware prompt generation, enabling interviewers to dynamically create and refine questions in real-time. The system was trained on best-practice questioning frameworks from legal psychologists." },
-                    { type: "heading", level: 2, text: "Results" },
-                    { type: "text", text: "Improved relevance of generated questions by 25% based on expert evaluation from legal professionals. The tool facilitates safer and more efficient investigative interviews. Feedback from field testing indicated that interviewers felt more confident and that interviews were less re-traumatizing." }
-                ]
+                sections: []
             },
-            
+            {
+                id: 5,
+                category: "applied",
+                title: "PotatoAI Guardian x NVIDIA and Dell Hackathon",
+                shortDescription: "An elder care system that leverages YOLOv8-Pose on the Dell GB10 to detect falls with 7ms latency while preserving privacy through real-time masking.",
+                coverImage: "videos/ipotatoAI.mp4",
+                isVideo: true,
+                year: "2023",
+                role: "Lead Developer",
+                tools: ["Web Design", "Prompt Engineering", "Flask", "SQL", "HTML", "CSS", "AI for Social Good"],
+                skills: ["Web Design", "Prompt Engineering", "Flask", "SQL"],
+                projectLink: "#",
+                overview: "This system assists interviewers in generating context-aware and legally appropriate questions during sensitive child investigative interviews, combining AI, legal psychology, and UX design.",
+                sections: []
+            },
             {
                 id: 6,
                 category: "experimental",
@@ -532,14 +516,7 @@
                 skills: ["Facial Recognition", "Speech Input", "Physical Installation", "Interactive Design"],
                 projectLink: "#",
                 overview: "An interactive physical installation that detects when visitors take a deep breath and release their worries through a poetic visualization experience.",
-                sections: [
-                    { type: "heading", level: 2, text: "Concept" },
-                    { type: "text", text: "Worry Blower emerged from research into somatic practices and stress relief. The installation bridges digital technology and physical, meditative experience. When visitors stand before the installation and take a deep breath, the system detects their breathing pattern and responds with visual and audio feedback—a moment of catharsis rendered visible." },
-                    { type: "heading", level: 2, text: "Technical Implementation" },
-                    { type: "text", text: "Combined facial recognition for breathing detection with particle systems and visual effects. The installation responds to the visitor's breathing patterns with calming animations, creating a feedback loop that encourages deeper, more mindful breathing." },
-                    { type: "heading", level: 2, text: "Impact" },
-                    { type: "text", text: "Installed at a community center, it created moments of genuine reflection and engagement among diverse visitors. Many reported feeling more relaxed after the interaction. The installation has been visited by hundreds of people and continues to be a centerpiece of the wellness center." }
-                ]
+                sections: []
             },
             {
                 id: 7,
@@ -554,39 +531,23 @@
                 skills: ["JavaScript", "Canvas", "HTML", "CSS", "Game Design"],
                 projectLink: "#",
                 overview: "A playful take on the classic fruit-slicing game, built from scratch using HTML5 Canvas and vanilla JavaScript.",
-                sections: [
-                    { type: "heading", level: 2, text: "Concept" },
-                    { type: "text", text: "Fruit Ninja reimagines the classic arcade experience for the web. Built entirely with vanilla JavaScript and HTML5 Canvas, it demonstrates core game development concepts while providing an enjoyable user experience. The game emphasizes satisfying feedback and responsive controls." },
-                    { type: "heading", level: 2, text: "Technical Challenges" },
-                    { type: "text", text: "Create smooth, responsive game mechanics with satisfying visual feedback using pure JavaScript. Key challenges included collision detection, particle effects, and maintaining consistent frame rates across different devices." },
-                    { type: "heading", level: 2, text: "Solution" },
-                    { type: "text", text: "Implemented collision detection algorithms optimized for real-time performance. Particle effects add visual richness without impacting performance. Game state management handles multiple difficulty levels and score tracking elegantly." },
-                    { type: "heading", level: 2, text: "Results" },
-                    { type: "text", text: "A fully functional game that demonstrates core game development concepts and provides an enjoyable user experience. The game has been played thousands of times and maintains an average rating of 4.5/5 stars." }
-                ]
+                sections: []
             },
             {
-            id: 9,
-            category: "experimental",
-            title: "The Fisherman",
-            shortDescription: "A puzzle-strategy game exploring elemental interactions and environmental mechanics.",
-            coverImage: "videos/fisherman.mp4",
-            isVideo: true,
-            year: "2023",
-            role: "Creative Developer",
-            tools: ["Interactive Installation", "Arduino", "JavaScript", "Environmental Narrative"],
-            skills: ["Interactive Installation", "Arduino", "JavaScript"],
-            projectLink: "#",
-            overview: "A 2D strategy game where players manipulate fire, ice, and nature elements to solve environmental puzzles and restore balance to a digital forest.",
-            sections: [
-                { type: "heading", level: 2, text: "The Challenge" },
-                { type: "text", text: "Create intuitive mechanics that teach players about elemental interactions through gameplay." },
-                { type: "heading", level: 2, text: "Solution" },
-                { type: "text", text: "Designed a grid-based system where elements interact with specific rules. Built visual feedback systems to help players understand cause-and-effect relationships." },
-                { type: "heading", level: 2, text: "Results" },
-                { type: "text", text: "An engaging puzzle game that explores the intersection of game design and environmental storytelling." }
-            ]
-        },
+                id: 9,
+                category: "experimental",
+                title: "The Fisherman",
+                shortDescription: "A puzzle-strategy game exploring elemental interactions and environmental mechanics.",
+                coverImage: "videos/fisherman.mp4",
+                isVideo: true,
+                year: "2023",
+                role: "Creative Developer",
+                tools: ["Interactive Installation", "Arduino", "JavaScript", "Environmental Narrative"],
+                skills: ["Interactive Installation", "Arduino", "JavaScript"],
+                projectLink: "#",
+                overview: "A 2D strategy game where players manipulate fire, ice, and nature elements to solve environmental puzzles and restore balance to a digital forest.",
+                sections: []
+            },
         ];
 
         const games = [
@@ -603,22 +564,12 @@
                 skills: ["JavaScript", "Canvas", "HTML", "CSS", "Game Mechanics"],
                 projectLink: "#",
                 overview: "A 2D strategy game where players manipulate fire, ice, and nature elements to solve environmental puzzles and restore balance to a digital forest.",
-                sections: [
-                    { type: "heading", level: 2, text: "Vision" },
-                    { type: "text", text: "Fireboy and Watergirl 2D combines environmental storytelling with puzzle-solving gameplay. The game teaches players about elemental interactions through play rather than exposition. Each level reveals how elements interact and transform environments." },
-                    { type: "heading", level: 2, text: "Design Challenge" },
-                    { type: "text", text: "Create intuitive mechanics that teach players about elemental interactions through gameplay. The core challenge was making the rule system transparent enough to be learnable but complex enough to create interesting puzzles." },
-                    { type: "heading", level: 2, text: "Implementation" },
-                    { type: "text", text: "Designed a grid-based system where elements interact with specific rules—fire melts ice, water extinguishes fire, nature absorbs water. Built visual feedback systems to help players understand cause-and-effect relationships through color, particles, and sound." },
-                    { type: "heading", level: 2, text: "Outcome" },
-                    { type: "text", text: "An engaging puzzle game that explores the intersection of game design and environmental storytelling. Players report learning about ecosystem relationships through play. The game has inspired educational adaptations for science classrooms." }
-                ]
+                sections: []
             }
         ];
 
         const allProjects = [...projects, ...games];
 
-        // Modal event listeners
         document.getElementById('projectModal').addEventListener('click', function(event) { 
             if (event.target === this) closeModal(); 
         });
@@ -627,7 +578,6 @@
             if (event.key === 'Escape' && document.getElementById('projectModal').style.display === 'block') closeModal(); 
         });
 
-        // Header effects
         const header = document.querySelector('header');
         const navBrand = document.getElementById('navBrand');
         const introSection = document.getElementById('intro');
@@ -638,13 +588,11 @@
             } else { 
                 header.classList.remove('scrolled'); 
             }
-            
             const introRect = introSection.getBoundingClientRect();
             const isInIntro = introRect.top <= 100 && introRect.bottom > 100;
             navBrand.textContent = isInIntro ? 'Qiya Huang' : 'QH';
         });
 
-        // Render projects
         document.addEventListener('DOMContentLoaded', function() {
             const appliedProjects = allProjects.filter(p => p.category === 'applied');
             const experimentalProjects = allProjects.filter(p => p.category === 'experimental');
@@ -654,8 +602,9 @@
                 projectArray.forEach(project => {
                     const card = document.createElement('div');
                     const isWip = project.wip === true;
-                    card.className = isWip ? 'project-card wip' : 'project-card';
-                    const circleLabel = isWip ? 'Work in Progress' : 'View';
+                    const isPasswordProtected = project.passwordProtected === true;
+                    card.className = `project-card${isWip ? ' wip' : ''}${isPasswordProtected ? ' password-protected' : ''}`;
+                    const circleLabel = isWip ? 'Work in Progress' : (isPasswordProtected ? 'Password Needed' : 'View');
                     const clickAction = isWip ? '' : `onclick="openModal(${project.id})"`;
 
                     const mediaContent = project.isVideo 
@@ -665,9 +614,7 @@
                     card.innerHTML = `
                         <div class="project-cover" ${clickAction}>
                             ${mediaContent}
-                            <div class="view-circle">
-                                ${circleLabel}
-                            </div>
+                            <div class="view-circle">${circleLabel}</div>
                         </div>
                         <div class="project-info" ${clickAction}>
                             <h3>${project.title}</h3>
