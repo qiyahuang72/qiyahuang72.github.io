@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Personal website of Qiya Huang – NYU M.S. Data Science. Forecasting, production ML systems, and LLM evaluation pipelines." />
+
+    <title> Qiya Huang </title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style.css" />
+
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👩🏻‍💻</text></svg>">
+
+</head>
+
+<body>
+
+    <div id="nav">
+        <nav class="navbar fixed-top navbar-expand-sm shadow navbar-light py-2" id="navbar"
+            style="background-color: #F8F9FA;">
+            <div class="container">
+                <!-- container-fluid -->
+
+                <a class="navbar-brand" href="/">Qiya Huang</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+                        <li class="nav-item nav-link link" onClick="document.getElementById('home').scrollIntoView({ behavior: 'smooth' });">
+                            <span>
+                                Home
+                            </span>
+                        </li>
+                        <li class="nav-item nav-link link"
+                            onClick="document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });" @click="updateNavItem(3)">
+                            <span>Work</span>
+                        </li>
+                        <li class="nav-item nav-link link"
+                            @click="updateNavItem(2)" onClick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' });">
+                            <span>About</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="main-container" id="home" style="position: relative;">
+        <div id="particles-js" style="height: 100%; min-height: 100vh;"></div>
+
+        <div class="main-description mt-3" style="display:inline-block">
+
+            <h1 class="display-1 text-center"> Qiya Huang </h1>
+            <p class="lead text-center fs-4"> Data Science @ NYU </p>
+            <div class="w-50 mx-auto d-flex justify-content-between links">
+                <a href="https://github.com/qiyahuang72" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="bi bi-github"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+                    </svg>
+                </a>
+                <a href="mailto:qh2044@nyu.edu" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="bi bi-envelope"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/cassie-qiya-huang-753213219/" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="bi bi-linkedin"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z" />
+                    </svg>
+                </a>
+            </div>
+            <p class="text-center fs-5"> </p>
+            <div class="mx-auto">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                    <button class="btn btn-lg btn-outline-primary me-md-2" type="button"
+                        onClick="document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });"> Projects </button>
+                    <button class=" btn btn-lg btn-outline-primary" type="button"
+                        onClick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' });"> About Me </button>
+                </div>
+
+            </div>
+
+
+            <div class="downArrow bounce">
+                <img onClick="document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });" width="40" height="40" alt=""
+                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMyIDMyIiBoZWlnaHQ9IjMycHgiIGlkPSLQodC70L7QuV8xIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMycHgiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxwYXRoIGQ9Ik0yNC4yODUsMTEuMjg0TDE2LDE5LjU3MWwtOC4yODUtOC4yODhjLTAuMzk1LTAuMzk1LTEuMDM0LTAuMzk1LTEuNDI5LDAgIGMtMC4zOTQsMC4zOTUtMC4zOTQsMS4wMzUsMCwxLjQzbDguOTk5LDkuMDAybDAsMGwwLDBjMC4zOTQsMC4zOTUsMS4wMzQsMC4zOTUsMS40MjgsMGw4Ljk5OS05LjAwMiAgYzAuMzk0LTAuMzk1LDAuMzk0LTEuMDM2LDAtMS40MzFDMjUuMzE5LDEwLjg4OSwyNC42NzksMTAuODg5LDI0LjI4NSwxMS4yODR6IiBmaWxsPSIjMTIxMzEzIiBpZD0iRXhwYW5kX01vcmUiLz48Zy8+PGcvPjxnLz48Zy8+PGcvPjxnLz48L3N2Zz4=" />
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="project-body mx-auto" style="padding-top: 50vh; margin-top: 20vh;">
+
+        <div class="container">
+
+            <div class="project-overview" id="projects">
+                <h1 class="display-2 text-center"> Projects & Experience </h1>
+                <hr>
+            </div>
+
+            <div id="filter-buttons" class="mx-auto" style="text-align: center;">
+
+            </div>
+
+            <div id="project-body" class="row">
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="about-body mx-auto my-0" style="width: 100%; height: 100%; min-height: 100vh; ">
+
+        <div class="about-overview" id="about">
+            <h1 class="display-2 text-center" style="padding-top: 1em;"> About Me </h1>
+        </div>
+
+        <div class="container text-center" style="padding-bottom: 2em;">
+            <div class="row">
+                <div class="col-lg-8 col-md-6 col-sm-12">
+                    <div class="row justify-content-center">
+                        <p class="strong h4"> Education </p>
+                        <ul class="list-group" style="margin-left: 10px; margin-right: 10px;">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                M.S. in Data Science — New York University
+                                <span class="badge bg-primary rounded-pill">May 2026</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                B.S. in Data Science, Minor in Interactive Media Arts — New York University
+                                <span class="badge bg-primary rounded-pill">May 2024</span>
+                            </li>
+                            <!-- <div class="btn-group btn-group-sm">
+                                <a href="#"
+                                    target="_blank" role="button"
+                                    style="border-radius: 0; border-top: 0px; border-bottom-left-radius: 5px;"
+                                    class="btn btn-outline-light fs-5 fw-light">
+                                    Resume
+                                </a>
+                                <a href="https://www.linkedin.com/"
+                                    target="_blank" role="button"
+                                    style="border-radius: 0; border-top: 0px; border-bottom-right-radius: 5px;"
+                                    class="btn btn-outline-light fs-5 fw-light">
+                                    Transcript
+                                </a>
+                            </div> -->
+                        </ul>
+
+                        <p class="strong h4" style="margin-top: 1.5em;"> Skills </p>
+                        <ul class="list-group" style="margin-left: 10px; margin-right: 10px;">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Python, SQL, R, Bash, JavaScript
+                                <span class="badge bg-primary rounded-pill">Languages</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Hypothesis Testing, A/B Testing, Sensitivity Analysis, Root-Cause Analysis, Time Series Forecasting
+                                <span class="badge bg-success rounded-pill">Statistics</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Regression, Gradient Boosting, Anomaly Detection, LLM Evaluation
+                                <span class="badge bg-danger rounded-pill">Machine Learning</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Pandas, NumPy, Scikit-learn, Matplotlib, Tableau, AWS (S3, SageMaker), Docker, Airflow, MLflow, Git
+                                <span class="badge bg-secondary rounded-pill">Tools</span>
+                            </li>
+                        </ul>
+
+                        <p class="strong h4" style="margin-top: 1.5em;"> Involvement </p>
+                        <ul class="list-group" style="margin-left: 10px; margin-right: 10px;">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                NYU CDS Graduate Student Community-Building Group (GCBG)
+                                <span class="badge bg-warning rounded-pill">Member</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                NYU GSAS Dean's Office
+                                <span class="badge bg-info rounded-pill">Assistant</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Introduction to Computer Programming
+                                <span class="badge bg-primary rounded-pill">Course Assistant</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Hiking, Zumba, Painting, Handicraft
+                                <span class="badge bg-info rounded-pill">Hobby</span>
+                            </li>
+                        </ul>
+
+                    </div>
+
+
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="row">
+                        <p class="strong h4"> Me </p>
+                        <div id="carouselExampleIndicators" class="carousel slide">
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                                    class="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                                    aria-label="Slide 2"></button>
+                            </div>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img src="images/qiya1.jpg" style="margin: auto; border-radius: 5px;"
+                                        class="d-block w-100" alt="...">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="images/qiya2.jpg" style="margin: auto; border-radius: 5px;"
+                                        class="d-block w-100" alt="...">
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button"
+                                data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="projects-data.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
